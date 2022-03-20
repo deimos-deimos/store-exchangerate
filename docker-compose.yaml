@@ -70,6 +70,21 @@ x-airflow-common:
       condition: service_healthy
 
 services:
+  exchangerate-db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: exchangerate
+      POSTGRES_PASSWORD: exchangerate
+    ports:
+      - '5432:5432'
+    volumes:
+      - exchangerate-db-volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "exchangerate"]
+      interval: 5s
+      retries: 5
+    restart: always
+
   postgres:
     image: postgres:13
     environment:
@@ -268,3 +283,4 @@ services:
 
 volumes:
   postgres-db-volume:
+  exchangerate-db-volume:
