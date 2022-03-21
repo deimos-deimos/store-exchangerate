@@ -75,10 +75,12 @@ services:
     environment:
       POSTGRES_USER: exchangerate
       POSTGRES_PASSWORD: exchangerate
+      POSTGRES_DB: exchangerate
     ports:
       - '5432:5432'
     volumes:
       - exchangerate-db-volume:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "exchangerate"]
       interval: 5s
