@@ -9,7 +9,8 @@ def request_date_range(start, end, base, symbols):
         'start_date': start,
         'end_date': end,
         'symbols': symbols,
-        'base': base
+        'base': base,
+        'places': 28
     }
     print('resuesting {} with {}'.format(timeseries_url, params))
     response = requests.get(timeseries_url, params=params)

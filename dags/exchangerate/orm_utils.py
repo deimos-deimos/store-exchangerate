@@ -1,5 +1,6 @@
 from datetime import datetime
-from peewee import PostgresqlDatabase, Model, TextField, DateField, DoubleField, DateTimeField, SQL, fn, Proxy
+from decimal import Decimal
+from peewee import PostgresqlDatabase, Model, TextField, DateField, DecimalField, DateTimeField, SQL, fn, Proxy
 
 database_proxy = Proxy()
 
@@ -16,7 +17,7 @@ def get_db_from_conf(db_conf):
 class ExchangerateStage(Model):
     pair = TextField()
     price_date = DateField()
-    price = DoubleField()
+    price = DecimalField(max_digits=28, decimal_places=15)
     tech_load_date = DateTimeField(
         constraints=[SQL("DEFAULT now()")])
 
@@ -29,7 +30,7 @@ class ExchangerateStage(Model):
 class ExchangerateModel(Model):
     pair = TextField()
     price_date = DateField()
-    price = DoubleField()
+    price = DecimalField(max_digits=28, decimal_places=15)
     tech_load_date = DateTimeField(
         constraints=[SQL("DEFAULT now()")])
 
@@ -50,7 +51,7 @@ def put_rates_to_stage(db_conf, rates_resp, base, symbols):
                 new_record = {
                     'pair': '{}/{}'.format(symbol, base),
                     'price_date': datetime.strptime(date, "%Y-%m-%d"),
-                    'price': 1 / price
+                    'price': 1 / Decimal(price)
                 }
                 records_to_add.append(new_record)
     database_proxy.initialize(get_db_from_conf(db_conf))
