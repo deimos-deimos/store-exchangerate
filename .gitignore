@@ -1,3 +1,7 @@
+deploy.sh
+
+.idea/*
+
 # Airflow logs
 logs/
 

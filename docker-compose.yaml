@@ -57,6 +57,10 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
     AIRFLOW__API__AUTH_BACKEND: 'airflow.api.auth.backend.basic_auth'
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+    AIRFLOW_CONN_EXCHANGERATE_DB: postgres://exchangerate:exchangerate@exchangerate-db:5432/exchangerate
+    # AIRFLOW_VAR_PAIRS: '[\"BTC/USD\",\"RUB/USD\",\"USD/EUR\"]'
+    # AIRFLOW_VAR_EXCHANGERATE_DB_SECRET: '{"db_host": "exchangerate-db", "db_port": "5432", "db_database": "exchangerate", "db_user": "exchangerate", "db_password": "exchangerate"}'
+
   volumes:
     - ./dags:/opt/airflow/dags
     - ./logs:/opt/airflow/logs
